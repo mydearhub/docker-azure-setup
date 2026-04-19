@@ -18,16 +18,19 @@ steps:
     secureFile: 'k8pubkey.pub'
     retryCount: '5'
 
-- task: BicepDeploy@0
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Deploy Bicep Template'
   inputs:
-    type: 'deployment'
-    operation: 'create'
-    scope: 'resourceGroup'
-    name: 'pipeline-deploy'
+    deploymentScope: 'Resource Group'
     azureResourceManagerConnection: 'azure-svc-conn'
     subscriptionId: '07349192-da34-42d5-937f-79a60bd85668'
+    action: 'Create Or Update Resource Group'
     resourceGroupName: 'rg-aks-poc'
-    templateFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
-    parametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam'
-    parameters: '-sshRSAPublicKey $(publickey.secureFilePath)'
+    location: 'North Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
+    csmParametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam'
+    overrideParameters: '-sshRSAPublicKey $(publickey.secureFilePath)'
+    deploymentMode: 'Incremental'
+
 
