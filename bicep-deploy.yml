@@ -20,7 +20,7 @@ steps:
     scope: 'resourceGroup'
     name: 'pipeline-deploy'
     azureResourceManagerConnection: 'azure-svc-conn'
-    subscriptionId: 'Azure subscription 1'
+    subscriptionId: '07349192-da34-42d5-937f-79a60bd85668'
     resourceGroupName: 'rg-aks-poc'
     templateFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
     parametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam'
