@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: BicepDeploy@0
+  inputs:
+    type: 'deployment'
+    operation: 'create'
+    scope: 'resourceGroup'
+    name: 'pipeline-deploy'
+    azureResourceManagerConnection: 'Azure subscription 1(07349192-da34-42d5-937f-79a60bd85668)'
