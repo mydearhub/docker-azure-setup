@@ -24,3 +24,5 @@ steps:
     resourceGroupName: 'rg-aks-poc'
     templateFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
     parametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam'
+    parameters: '-sshRSAPublicKey $(sshRSAPublicKey)'
+
