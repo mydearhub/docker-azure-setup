@@ -1,9 +1,9 @@
 
 @description('The name of the Managed Cluster resource.')
-param clusterName string = 'aks101cluster'
+param clusterName string
 
 @description('The location of the Managed Cluster resource.')
-param location string = 'westeurope'
+param location string
 
 @description('Optional DNS prefix to use with hosted Kubernetes API server FQDN.')
 param dnsPrefix string
@@ -16,7 +16,7 @@ param osDiskSizeGB int = 0
 @description('The number of nodes for the cluster.')
 @minValue(1)
 @maxValue(50)
-param agentCount int = 3
+param agentCount int
 
 @description('The size of the Virtual Machine.')
 param agentVMSize string = 'standard_d2s_v3'
