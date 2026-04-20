@@ -13,10 +13,10 @@ steps:
   displayName: 'Run a one-line script'
 
 - task: DownloadSecureFile@1
-  name: publickey
+  name: securefiletask
   inputs:
     secureFile: 'k8pubkey.pub'
-    retryCount: '5'
+    retryCount: '8'
 
 - task: AzureCLI@2
   displayName: 'Build Bicep to ARM'
@@ -44,7 +44,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
     csmParametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.parameters.json'
-    overrideParameters: '-sshRSAPublicKey $(publickey.secureFilePath)'
+    overrideParameters: '-sshRSAPublicKey $(securefiletask.secureFilePath)'
     deploymentMode: 'Incremental'
 
 
