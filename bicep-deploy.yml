@@ -18,6 +18,20 @@ steps:
     secureFile: 'k8pubkey.pub'
     retryCount: '5'
 
+- task: AzureCLI@2
+  displayName: 'Build Bicep to ARM'
+  inputs:
+    azureSubscription: 'azure-svc-conn'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az bicep build --file $(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep \
+        --outfile $(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.json
+      az bicep build-params \
+        --file $(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam \
+        --outfile $(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.parameters.json
+
+
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Deploy Bicep Template'
   inputs:
@@ -29,7 +43,7 @@ steps:
     location: 'North Europe'
     templateLocation: 'Linked artifact'
     csmFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicep'
-    csmParametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.bicepparam'
+    csmParametersFile: '$(System.DefaultWorkingDirectory)/configuration/iaac/bicep/main.parameters.json'
     overrideParameters: '-sshRSAPublicKey $(publickey.secureFilePath)'
     deploymentMode: 'Incremental'
 
